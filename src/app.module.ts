@@ -7,12 +7,13 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot(),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
-      inject: [ConfigService],
-      useFactory: async (config: ConfigService) => ({
-        uri: config.get<string>('CLUSTER_URI'),
+      useFactory: async (c: ConfigService) => ({
+        uri: c.get<string>('CLUSTER_URI'),
       }),
+      inject: [ConfigService],
     }),
   ],
   controllers: [AppController],
