@@ -1,20 +1,17 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-
 import { MongooseModule } from '@nestjs/mongoose';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigModule } from '@nestjs/config';
+import { AppointmentModule } from './appointment/appointment.module';
+import { EmployeeModule } from './employee/employee.module';
 
 @Module({
   imports: [
+    MongooseModule.forRoot('mongodb://127.0.0.1/core-test'),
     ConfigModule.forRoot(),
-    MongooseModule.forRootAsync({
-      imports: [ConfigModule],
-      useFactory: async (c: ConfigService) => ({
-        uri: c.get<string>('CLUSTER_URI'),
-      }),
-      inject: [ConfigService],
-    }),
+    AppointmentModule,
+    EmployeeModule,
   ],
   controllers: [AppController],
   providers: [AppService],
