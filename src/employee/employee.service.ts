@@ -14,7 +14,6 @@ export class EmployeeService {
 
   async createEmployee(employee: employeeDocument) {
     const newEmployee = new this.employeeeModel(employee);
-    console.log(newEmployee);
 
     return newEmployee.save();
   }

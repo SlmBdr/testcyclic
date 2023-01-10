@@ -60,4 +60,8 @@ const unitSchema = new Schema({
   },
 });
 
-export const unit = mongoose.model<unitDocument, unitModel>('unit', unitSchema);
+export const unitModels = mongoose.model<unitDocument, unitModel>(
+  'unit',
+  unitSchema,
+);
+export class unit {}

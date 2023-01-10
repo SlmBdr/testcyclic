@@ -14,33 +14,56 @@ export class AppointmentService {
 
   async createAppointment(appointment: appointmentDocument) {
     const newAppointment = new this.appointmentModel(appointment);
-    console.log(newAppointment);
-
-    return newAppointment.save();
+    if (!newAppointment) {
+      return null;
+    } else {
+      return newAppointment.save();
+    }
   }
 
   async findAllAppointment() {
-    return await this.appointmentModel.find();
-    // .populate({
-    //   path: 'employee',
-    //   select: ['name'],
-    // });
-  }
-
-  async findOne(appointment_no: string) {
-    const data = await this.appointmentModel.findOne({
-      appointment_no: appointment_no,
+    return await this.appointmentModel.find().populate({
+      path: 'employee',
+      strictPopulate: false,
+      select: ['name'],
     });
-    if (data == null) {
-      return { data: null, error };
-    }
-    return { data, error: null };
   }
 
-  async update(appointment_no: string, appointment: appointmentDocument) {
-    return this.appointmentModel.updateOne(
-      { appointment_no },
-      { $set: { ...appointment } },
-    );
+  async findOne(mrn: string) {
+    const data = await this.appointmentModel
+      .findOne({
+        mrn,
+      })
+      .populate([
+        {
+          path: 'unit',
+          select: [
+            'name',
+            'type',
+            'location',
+            'status',
+            'capacity',
+            'created_at',
+            'created_by',
+          ],
+        },
+        {
+          path: 'doctor',
+          select: ['name', 'position'],
+        },
+        {
+          path: 'created_by',
+          select: 'name',
+        },
+      ]);
+    // .populate({
+    //   path: 'doctor',
+    //   select: 'name',
+    // });
+    return data;
+  }
+
+  async update(id: string, body: appointmentDocument) {
+    return this.appointmentModel.updateOne({ id }, { $set: { ...body } });
   }
 }

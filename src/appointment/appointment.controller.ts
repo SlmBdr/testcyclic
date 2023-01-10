@@ -1,6 +1,8 @@
-import { Controller, Post } from '@nestjs/common';
-import { Get, Put } from '@nestjs/common/decorators';
+import { Controller, Post, Param } from '@nestjs/common';
+import { Body, Get, Patch, Put, Res } from '@nestjs/common/decorators';
+import { HttpStatus } from '@nestjs/common/enums';
 import { Payload } from '@nestjs/microservices';
+import { error } from 'console';
 import { appointmentDocument } from 'src/interfaces/mongoose.gen';
 
 import { AppointmentService } from './appointment.service';
@@ -10,8 +12,18 @@ export class AppointmentController {
   constructor(private readonly appointmentService: AppointmentService) {}
 
   @Post()
-  create(@Payload() appointment: appointmentDocument) {
-    return this.appointmentService.createAppointment(appointment);
+  async create(@Res() res, @Body() appointment: appointmentDocument) {
+    const newAppointment = await this.appointmentService.createAppointment(
+      appointment,
+    );
+    if (newAppointment) {
+      return res.status(HttpStatus.CREATED).json({ newAppointment });
+    } else {
+      return res.status(HttpStatus.BAD_REQUEST).json({
+        data: null,
+        error,
+      });
+    }
   }
 
   @Get()
@@ -19,12 +31,12 @@ export class AppointmentController {
     return this.appointmentService.findAllAppointment();
   }
 
-  @Get('getone')
-  findOne(@Payload() appointment_no: string) {
-    return this.appointmentService.findOne(appointment_no);
+  @Get('getone/:mrn')
+  findOne(@Param('mrn') mrn: string) {
+    return this.appointmentService.findOne(mrn);
   }
 
-  @Put()
+  @Patch(':id')
   update(@Payload() appointment: appointmentDocument) {
     return this.appointmentService.update(appointment.id, appointment);
   }

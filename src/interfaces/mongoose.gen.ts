@@ -18,6 +18,8 @@ import mongoose from 'mongoose';
 export type appointment = {
   appointment_no: string;
   mrn: string;
+  doctor: employee['_id'] | employee;
+  unit: unit['_id'] | unit;
   time: string;
   que_no: string;
   date: Date;
@@ -27,8 +29,11 @@ export type appointment = {
   guarantor_no?: string;
   status: 'BATAL' | 'KADALUARSA' | 'SUDAH REGISTRASI' | 'BELUM REGISTRASI';
   created_at: Date;
+  created_by: employee['_id'] | employee;
   updated_at?: Date;
+  updated_by?: employee['_id'] | employee;
   canceled_at?: Date;
+  canceled_by?: employee['_id'] | employee;
   _id: mongoose.Types.ObjectId;
 };
 
@@ -112,6 +117,8 @@ export type appointmentDocument = mongoose.Document<
   appointmentMethods & {
     appointment_no: string;
     mrn: string;
+    doctor: employeeDocument['_id'] | employeeDocument;
+    unit: unitDocument['_id'] | unitDocument;
     time: string;
     que_no: string;
     date: Date;
@@ -126,8 +133,11 @@ export type appointmentDocument = mongoose.Document<
     guarantor_no?: string;
     status: 'BATAL' | 'KADALUARSA' | 'SUDAH REGISTRASI' | 'BELUM REGISTRASI';
     created_at: Date;
+    created_by: employeeDocument['_id'] | employeeDocument;
     updated_at?: Date;
+    updated_by?: employeeDocument['_id'] | employeeDocument;
     canceled_at?: Date;
+    canceled_by?: employeeDocument['_id'] | employeeDocument;
     _id: mongoose.Types.ObjectId;
   };
 
@@ -149,6 +159,24 @@ export type employeeName = {
 };
 
 /**
+ * Lean version of employeeAccountDocument
+ *
+ * This has all Mongoose getters & functions removed. This type will be returned from `employeeDocument.toObject()`.
+ * ```
+ * const employeeObject = employee.toObject();
+ * ```
+ */
+export type employeeAccount = {
+  has_account: boolean;
+  account_id?: string;
+  account_email?: string;
+  account_role?: string;
+  registered_at?: Date;
+  registered_by?: employee['_id'] | employee;
+  _id: mongoose.Types.ObjectId;
+};
+
+/**
  * Lean version of employeeDocument
  *
  * This has all Mongoose getters & functions removed. This type will be returned from `employeeDocument.toObject()`. To avoid conflicts with model names, use the type alias `employeeObject`.
@@ -166,6 +194,7 @@ export type employee = {
   updated_by?: employee['_id'] | employee;
   _id: mongoose.Types.ObjectId;
   name: employeeName;
+  account: employeeAccount;
 };
 
 /**
@@ -256,6 +285,25 @@ export type employeeNameDocument =
  * const employee = mongoose.model<employeeDocument, employeeModel>("employee", employeeSchema);
  * ```
  */
+export type employeeAccountDocument =
+  mongoose.Document<mongoose.Types.ObjectId> & {
+    has_account: boolean;
+    account_id?: string;
+    account_email?: string;
+    account_role?: string;
+    registered_at?: Date;
+    registered_by?: employeeDocument['_id'] | employeeDocument;
+    _id: mongoose.Types.ObjectId;
+  };
+
+/**
+ * Mongoose Document type
+ *
+ * Pass this type to the Mongoose Model constructor:
+ * ```
+ * const employee = mongoose.model<employeeDocument, employeeModel>("employee", employeeSchema);
+ * ```
+ */
 export type employeeDocument = mongoose.Document<
   mongoose.Types.ObjectId,
   employeeQueries
@@ -270,6 +318,7 @@ export type employeeDocument = mongoose.Document<
     updated_by?: employeeDocument['_id'] | employeeDocument;
     _id: mongoose.Types.ObjectId;
     name: employeeNameDocument;
+    account: employeeAccountDocument;
   };
 
 /**
