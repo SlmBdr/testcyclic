@@ -19,7 +19,9 @@ const entityEmployeeSchema = new Schema({
   ],
 });
 
-export const entityEmployee = mongoose.model<
+export const entityEmployeeModels = mongoose.model<
   entityEmployeeDocument,
   entityEmployeeModel
 >('entityEmployee', entityEmployeeSchema);
+
+export class entityEmployee {}

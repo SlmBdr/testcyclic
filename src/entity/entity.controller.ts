@@ -7,7 +7,7 @@ import {
   Param,
   Patch,
 } from '@nestjs/common';
-import { MessagePattern, Payload } from '@nestjs/microservices';
+import { Payload } from '@nestjs/microservices';
 import { entityDocument } from 'src/interfaces/mongoose.gen';
 import { EntityService } from './entity.service';
 

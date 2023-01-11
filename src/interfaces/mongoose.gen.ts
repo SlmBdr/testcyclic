@@ -150,12 +150,14 @@ export type appointmentDocument = mongoose.Document<
  * ```
  */
 export type employeeName = {
+  _id: {
+    type: {};
+  };
   prefix?: string;
   first: string;
   middle?: string;
   last: string;
   suffix?: string;
-  _id: mongoose.Types.ObjectId;
 };
 
 /**
@@ -173,7 +175,9 @@ export type employeeAccount = {
   account_role?: string;
   registered_at?: Date;
   registered_by?: employee['_id'] | employee;
-  _id: mongoose.Types.ObjectId;
+  _id: {
+    type: {};
+  };
 };
 
 /**
@@ -269,12 +273,14 @@ export type employeeSchema = mongoose.Schema<
  */
 export type employeeNameDocument =
   mongoose.Document<mongoose.Types.ObjectId> & {
+    _id: {
+      type: {};
+    };
     prefix?: string;
     first: string;
     middle?: string;
     last: string;
     suffix?: string;
-    _id: mongoose.Types.ObjectId;
   };
 
 /**
@@ -293,7 +299,9 @@ export type employeeAccountDocument =
     account_role?: string;
     registered_at?: Date;
     registered_by?: employeeDocument['_id'] | employeeDocument;
-    _id: mongoose.Types.ObjectId;
+    _id: {
+      type: {};
+    };
   };
 
 /**
@@ -433,7 +441,9 @@ export type entityAddress = {
   city: string;
   province?: string;
   zipcode?: string;
-  _id: mongoose.Types.ObjectId;
+  _id: {
+    type: {};
+  };
 };
 
 /**
@@ -445,6 +455,9 @@ export type entityAddress = {
  * ```
  */
 export type entityWarehouse = {
+  _id: {
+    type: {};
+  };
   storage_type:
     | 'PASOKAN MEDIS'
     | 'PASOKAN NON - MEDIS '
@@ -452,7 +465,6 @@ export type entityWarehouse = {
     | 'MAKANAN OLAHAN '
     | 'LAINNYA '
     | 'SEMUA ';
-  _id: mongoose.Types.ObjectId;
 };
 
 /**
@@ -464,8 +476,10 @@ export type entityWarehouse = {
  * ```
  */
 export type entityMedical = {
+  _id: {
+    type: {};
+  };
   is_main_branch: boolean;
-  _id: mongoose.Types.ObjectId;
 };
 
 /**
@@ -567,7 +581,9 @@ export type entityAddressDocument =
     city: string;
     province?: string;
     zipcode?: string;
-    _id: mongoose.Types.ObjectId;
+    _id: {
+      type: {};
+    };
   };
 
 /**
@@ -580,6 +596,9 @@ export type entityAddressDocument =
  */
 export type entityWarehouseDocument =
   mongoose.Document<mongoose.Types.ObjectId> & {
+    _id: {
+      type: {};
+    };
     storage_type:
       | 'PASOKAN MEDIS'
       | 'PASOKAN NON - MEDIS '
@@ -587,7 +606,6 @@ export type entityWarehouseDocument =
       | 'MAKANAN OLAHAN '
       | 'LAINNYA '
       | 'SEMUA ';
-    _id: mongoose.Types.ObjectId;
   };
 
 /**
@@ -600,8 +618,10 @@ export type entityWarehouseDocument =
  */
 export type entityMedicalDocument =
   mongoose.Document<mongoose.Types.ObjectId> & {
+    _id: {
+      type: {};
+    };
     is_main_branch: boolean;
-    _id: mongoose.Types.ObjectId;
   };
 
 /**
@@ -755,6 +775,9 @@ export type guarantorDocument = mongoose.Document<
  * ```
  */
 export type organizationContact_person = {
+  _id: {
+    type: {};
+  };
   name?: string;
   ssn?: string;
   relation?:
@@ -769,7 +792,6 @@ export type organizationContact_person = {
     | 'KERABAT';
   email: string;
   phone_number: string[];
-  _id: mongoose.Types.ObjectId;
 };
 
 /**
@@ -787,7 +809,9 @@ export type organizationAddress = {
   city: string;
   province?: string;
   zipcode?: string;
-  _id: mongoose.Types.ObjectId;
+  _id: {
+    type: {};
+  };
 };
 
 /**
@@ -885,6 +909,9 @@ export type organizationSchema = mongoose.Schema<
  */
 export type organizationContact_personDocument =
   mongoose.Document<mongoose.Types.ObjectId> & {
+    _id: {
+      type: {};
+    };
     name?: string;
     ssn?: string;
     relation?:
@@ -899,7 +926,6 @@ export type organizationContact_personDocument =
       | 'KERABAT';
     email: string;
     phone_number: mongoose.Types.Array<string>;
-    _id: mongoose.Types.ObjectId;
   };
 
 /**
@@ -918,7 +944,9 @@ export type organizationAddressDocument =
     city: string;
     province?: string;
     zipcode?: string;
-    _id: mongoose.Types.ObjectId;
+    _id: {
+      type: {};
+    };
   };
 
 /**
@@ -954,12 +982,14 @@ export type organizationDocument = mongoose.Document<
  * ```
  */
 export type patientName = {
+  _id: {
+    type: {};
+  };
   prefix?: string;
   first: string;
   middle?: string;
   last: string;
   suffix?: string;
-  _id: mongoose.Types.ObjectId;
 };
 
 /**
@@ -971,6 +1001,9 @@ export type patientName = {
  * ```
  */
 export type patientAdditional_data = {
+  _id: {
+    type: {};
+  };
   dob?: Date;
   pob?: string;
   address: {
@@ -1029,7 +1062,6 @@ export type patientAdditional_data = {
   notes?: string;
   guarantor: guarantor['_id'] | guarantor;
   guarantor_no?: string;
-  _id: mongoose.Types.ObjectId;
 };
 
 /**
@@ -1133,12 +1165,14 @@ export type patientSchema = mongoose.Schema<
  * ```
  */
 export type patientNameDocument = mongoose.Document<mongoose.Types.ObjectId> & {
+  _id: {
+    type: {};
+  };
   prefix?: string;
   first: string;
   middle?: string;
   last: string;
   suffix?: string;
-  _id: mongoose.Types.ObjectId;
 };
 
 /**
@@ -1151,6 +1185,9 @@ export type patientNameDocument = mongoose.Document<mongoose.Types.ObjectId> & {
  */
 export type patientAdditional_dataDocument =
   mongoose.Document<mongoose.Types.ObjectId> & {
+    _id: {
+      type: {};
+    };
     dob?: Date;
     pob?: string;
     address: {
@@ -1209,7 +1246,6 @@ export type patientAdditional_dataDocument =
     notes?: string;
     guarantor: guarantorDocument['_id'] | guarantorDocument;
     guarantor_no?: string;
-    _id: mongoose.Types.ObjectId;
   };
 
 /**
@@ -1259,7 +1295,9 @@ export type registrationCobGuarantor = {
   guarantor_no: string;
   method: 'PLAFON, CAKUPAN';
   plafond_amount?: string;
-  _id: mongoose.Types.ObjectId;
+  _id: {
+    type: {};
+  };
 };
 
 /**
@@ -1354,7 +1392,9 @@ export type registrationCobGuarantorDocument = mongoose.Types.Subdocument & {
   guarantor_no: string;
   method: 'PLAFON, CAKUPAN';
   plafond_amount?: string;
-  _id: mongoose.Types.ObjectId;
+  _id: {
+    type: {};
+  };
 };
 
 /**
@@ -1387,11 +1427,13 @@ export type registrationCobDocument = mongoose.Document<
  * ```
  */
 export type registrationService_time = {
+  _id: {
+    type: {};
+  };
   arrived_at?: Date;
   confirmed_at?: Date;
   served_at?: Date;
   finished_at?: Date;
-  _id: mongoose.Types.ObjectId;
 };
 
 /**
@@ -1502,11 +1544,13 @@ export type registrationSchema = mongoose.Schema<
  */
 export type registrationService_timeDocument =
   mongoose.Document<mongoose.Types.ObjectId> & {
+    _id: {
+      type: {};
+    };
     arrived_at?: Date;
     confirmed_at?: Date;
     served_at?: Date;
     finished_at?: Date;
-    _id: mongoose.Types.ObjectId;
   };
 
 /**
@@ -1555,9 +1599,11 @@ export type registrationDocument = mongoose.Document<
  * ```
  */
 export type unitLocation = {
+  _id: {
+    type: {};
+  };
   floor: string;
   number: string;
-  _id: mongoose.Types.ObjectId;
 };
 
 /**
@@ -1571,7 +1617,9 @@ export type unitLocation = {
 export type unitCapacity = {
   total: number;
   filled: number;
-  _id: mongoose.Types.ObjectId;
+  _id: {
+    type: {};
+  };
 };
 
 /**
@@ -1667,9 +1715,11 @@ export type unitSchema = mongoose.Schema<
  */
 export type unitLocationDocument =
   mongoose.Document<mongoose.Types.ObjectId> & {
+    _id: {
+      type: {};
+    };
     floor: string;
     number: string;
-    _id: mongoose.Types.ObjectId;
   };
 
 /**
@@ -1684,7 +1734,9 @@ export type unitCapacityDocument =
   mongoose.Document<mongoose.Types.ObjectId> & {
     total: number;
     filled: number;
-    _id: mongoose.Types.ObjectId;
+    _id: {
+      type: {};
+    };
   };
 
 /**

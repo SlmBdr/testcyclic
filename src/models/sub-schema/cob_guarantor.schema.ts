@@ -19,6 +19,9 @@ const cob_guarantor = new Schema({
   plafond_amount: {
     type: String,
   },
+  _id: {
+    type: false,
+  },
 });
 
 export default cob_guarantor;

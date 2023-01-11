@@ -43,6 +43,10 @@ export class AppointmentService {
           path: 'doctor',
           select: ['name.first', 'name.last', 'position'],
         },
+        {
+          path: 'created_by',
+          select: 'name',
+        },
       ]);
     // .populate({
     //   path: 'doctor',

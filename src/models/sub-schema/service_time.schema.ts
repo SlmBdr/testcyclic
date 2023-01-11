@@ -1,6 +1,9 @@
 import { Schema } from 'mongoose';
 
 const service_time = new Schema({
+  _id: {
+    type: false,
+  },
   arrived_at: {
     type: Date,
   },

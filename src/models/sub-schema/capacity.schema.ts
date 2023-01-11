@@ -9,6 +9,9 @@ const capacity = new Schema({
     type: Number,
     required: true,
   },
+  _id: {
+    type: false,
+  },
 });
 
 export default capacity;

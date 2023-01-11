@@ -36,8 +36,8 @@ export class EntityService {
     return { data, error: null };
   }
 
-  update(id: string, entity: entityDocument) {
-    return this.entityModel.updateOne(
+  async update(id: string, entity: entityDocument) {
+    return await this.entityModel.updateOne(
       {
         id,
       },

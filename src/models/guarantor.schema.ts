@@ -40,7 +40,8 @@ const guarantorSchema = new Schema({
   },
 });
 
-export const guarantor = mongoose.model<guarantorDocument, guarantorModel>(
-  'guarantor',
-  guarantorSchema,
-);
+export const guarantorModels = mongoose.model<
+  guarantorDocument,
+  guarantorModel
+>('guarantor', guarantorSchema);
+export class guarantor {}

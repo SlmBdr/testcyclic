@@ -2,6 +2,9 @@ import { Schema } from 'mongoose';
 import { RELATION } from '../../constants';
 
 const patient_additional = new Schema({
+  _id: {
+    type: false,
+  },
   dob: {
     type: Date,
   },

@@ -1,6 +1,9 @@
 import { Schema } from 'mongoose';
 
 const person_name = new Schema({
+  _id: {
+    type: false,
+  },
   prefix: {
     type: String,
   },

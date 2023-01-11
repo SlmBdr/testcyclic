@@ -8,6 +8,8 @@ import { EmployeeModule } from './employee/employee.module';
 import { UnitModule } from './unit/unit.module';
 import { OrganizationModule } from './organization/organization.module';
 import { EntityModule } from './entity/entity.module';
+import { EntityEmployeeModule } from './entity_employee/entity_employee.module';
+import { GuarantorModule } from './guarantor/guarantor.module';
 
 @Module({
   imports: [
@@ -18,6 +20,8 @@ import { EntityModule } from './entity/entity.module';
     UnitModule,
     OrganizationModule,
     EntityModule,
+    EntityEmployeeModule,
+    GuarantorModule,
   ],
   controllers: [AppController],
   providers: [AppService],

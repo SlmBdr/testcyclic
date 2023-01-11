@@ -2,6 +2,9 @@ import { Schema } from 'mongoose';
 import { RELATION } from '../../constants';
 
 const contact = new Schema({
+  _id: {
+    type: false,
+  },
   name: {
     type: String,
   },

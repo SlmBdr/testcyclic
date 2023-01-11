@@ -23,6 +23,9 @@ const address = new Schema({
   zipcode: {
     type: String,
   },
+  _id: {
+    type: false,
+  },
 });
 
 export default address;
