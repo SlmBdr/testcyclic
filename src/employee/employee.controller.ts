@@ -1,28 +1,43 @@
-import { Controller, Get, Post, Put } from '@nestjs/common';
+import { Controller, Get, Param, Post } from '@nestjs/common';
 import { Payload } from '@nestjs/microservices';
 import { EmployeeService } from './employee.service';
 import { employeeDocument } from 'src/interfaces/mongoose.gen';
+import { Patch, Res } from '@nestjs/common/decorators';
+import { HttpStatus } from '@nestjs/common/enums';
 
 @Controller('/employee')
 export class EmployeeController {
   constructor(private readonly employeeService: EmployeeService) {}
 
   @Post('inputEmployee')
-  create(@Payload() employee: employeeDocument) {
-    return this.employeeService.createEmployee(employee);
+  async create(@Res() res, @Payload() employee: employeeDocument) {
+    const newEmployee = await this.employeeService.createEmployee(employee);
+    if (!newEmployee) {
+      return res.status(HttpStatus.BAD_REQUEST);
+    }
+    {
+      return res.status(HttpStatus.CREATED).json({ newEmployee });
+    }
   }
 
   @Get()
-  findAll() {
-    return this.employeeService.findAllEmployee();
+  async findAll(@Res() res) {
+    const allEmployee = await this.employeeService.findAllEmployee();
+    return res.status(HttpStatus.ACCEPTED).json({ allEmployee });
   }
 
-  @Get()
-  findOne(@Payload() name: string) {
-    return this.employeeService.findOne(name);
+  @Get(':position')
+  async findOne(@Res() res, @Param('position') position: string) {
+    const detailEmployee = await this.employeeService.findOne(position);
+    if (!detailEmployee) {
+      return res.status(HttpStatus.BAD_REQUEST);
+    }
+    {
+      return res.status(HttpStatus.OK).JSON({ detailEmployee });
+    }
   }
 
-  @Put()
+  @Patch()
   update(@Payload() employee: employeeDocument) {
     return this.employeeService.update(employee.id, employee);
   }

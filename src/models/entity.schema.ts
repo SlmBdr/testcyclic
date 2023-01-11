@@ -59,7 +59,8 @@ const entitySchema = new Schema({
   },
 });
 
-export const entity = mongoose.model<entityDocument, entityModel>(
+export const entityModels = mongoose.model<entityDocument, entityModel>(
   'entity',
   entitySchema,
 );
+export class entity {}

@@ -6,6 +6,8 @@ import { ConfigModule } from '@nestjs/config';
 import { AppointmentModule } from './appointment/appointment.module';
 import { EmployeeModule } from './employee/employee.module';
 import { UnitModule } from './unit/unit.module';
+import { OrganizationModule } from './organization/organization.module';
+import { EntityModule } from './entity/entity.module';
 
 @Module({
   imports: [
@@ -14,6 +16,8 @@ import { UnitModule } from './unit/unit.module';
     AppointmentModule,
     EmployeeModule,
     UnitModule,
+    OrganizationModule,
+    EntityModule,
   ],
   controllers: [AppController],
   providers: [AppService],

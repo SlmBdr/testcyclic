@@ -14,18 +14,44 @@ export class EmployeeService {
 
   async createEmployee(employee: employeeDocument) {
     const newEmployee = new this.employeeeModel(employee);
-
-    return newEmployee.save();
+    if (!newEmployee) {
+      return null;
+    } else {
+      return newEmployee.save();
+    }
   }
 
   async findAllEmployee() {
-    return await this.employeeeModel.find();
+    return await this.employeeeModel.find().populate([
+      {
+        path: 'created_by',
+        select: 'name',
+      },
+      {
+        path: 'updated_by',
+        select: 'name',
+      },
+      {
+        path: 'organization',
+      },
+    ]);
   }
 
-  async findOne(name: string) {
-    const data = await this.employeeeModel.findOne({
-      name: name,
-    });
+  async findOne(position: string) {
+    const data = await this.employeeeModel
+      .findOne({
+        position,
+      })
+      .populate([
+        {
+          path: 'created_by',
+          select: ['name.first', 'name.last'],
+        },
+        {
+          path: 'updated_by',
+          select: 'name',
+        },
+      ]);
     if (data == null) {
       return { data: null, error };
     }

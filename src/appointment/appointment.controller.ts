@@ -1,5 +1,5 @@
 import { Controller, Post, Param } from '@nestjs/common';
-import { Body, Get, Patch, Put, Res } from '@nestjs/common/decorators';
+import { Body, Get, Patch, Res } from '@nestjs/common/decorators';
 import { HttpStatus } from '@nestjs/common/enums';
 import { Payload } from '@nestjs/microservices';
 import { error } from 'console';
@@ -27,17 +27,47 @@ export class AppointmentController {
   }
 
   @Get()
-  findAll() {
-    return this.appointmentService.findAllAppointment();
+  async findAll(@Res() res) {
+    const data = await this.appointmentService.findAllAppointment();
+    if (data === null || '') {
+      return res.status(HttpStatus.BAD_REQUEST), error;
+    } else {
+      return res.status(HttpStatus.OK).json({
+        data,
+      });
+    }
   }
 
   @Get('getone/:mrn')
-  findOne(@Param('mrn') mrn: string) {
-    return this.appointmentService.findOne(mrn);
+  async findOne(@Res() res, @Param('mrn') mrn: string) {
+    const AppointmentDetail = await this.appointmentService.findOne(mrn);
+    if (AppointmentDetail === null || '') {
+      return res.status(HttpStatus.BAD_REQUEST).json({
+        error: 'not found',
+      });
+    }
+    {
+      return res.status(HttpStatus.OK).json({
+        AppointmentDetail,
+      });
+    }
   }
 
   @Patch(':id')
-  update(@Payload() appointment: appointmentDocument) {
-    return this.appointmentService.update(appointment.id, appointment);
+  async update(@Res() res, @Payload() appointment: appointmentDocument) {
+    const AppointmentUpdate = await this.appointmentService.update(
+      appointment.id,
+      appointment,
+    );
+    if (!AppointmentUpdate) {
+      return res.status(HttpStatus.BAD_REQUEST).json({
+        message: 'update failed',
+      });
+    }
+    {
+      return res.status(HttpStatus.CREATED).json({
+        AppointmentUpdate,
+      });
+    }
   }
 }

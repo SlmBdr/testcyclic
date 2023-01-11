@@ -1,10 +1,19 @@
-import { Body, Controller, HttpStatus, Post, Res } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpStatus,
+  Patch,
+  Post,
+  Res,
+} from '@nestjs/common';
+import { Param } from '@nestjs/common/decorators';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { error } from 'console';
 import { unitDocument } from 'src/interfaces/mongoose.gen';
 import { UnitService } from './unit.service';
 
-@Controller('/unit')
+@Controller('unit')
 export class UnitController {
   constructor(private readonly unitService: UnitService) {}
 
@@ -21,23 +30,24 @@ export class UnitController {
     }
   }
 
-  @MessagePattern('findAllUnit')
+  @Get()
   findAll() {
-    return this.unitService.findAll();
+    return this.unitService.findAllUnit();
   }
 
-  @MessagePattern('findOneUnit')
-  findOne(@Payload() id: number) {
-    return this.unitService.findOne(id);
+  @Get('detail/:status')
+  findOne(@Param('status') status: string) {
+    return this.unitService.findOne(status);
   }
 
-  @MessagePattern('updateUnit')
-  update(@Payload() updateUnitDto) {
-    return this.unitService.update(updateUnitDto.id);
-  }
-
-  @MessagePattern('removeUnit')
-  remove(@Payload() id: number) {
-    return this.unitService.remove(id);
+  @Patch('update/:id')
+  async update(@Res() res, @Payload() unit: unitDocument) {
+    const unitUpdate = await this.unitService.update(unit.id, unit);
+    if (!unitUpdate) {
+      return res.status(HttpStatus.BAD_REQUEST).json({
+        message: 'update failed',
+      });
+    }
+    return res.status(HttpStatus.OK).json({ unitUpdate });
   }
 }

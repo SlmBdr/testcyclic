@@ -21,19 +21,30 @@ export class UnitService {
     }
   }
 
-  findAll() {
-    return `This action returns all unit`;
+  async findAllUnit() {
+    return this.unitModel.find().populate([
+      {
+        path: 'belongs_to',
+      },
+      {
+        path: 'created_by',
+      },
+    ]);
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} unit`;
+  async findOne(status: string) {
+    const unitDetail = await this.unitModel.findOne({ status }).populate([
+      {
+        path: 'belongs_to',
+      },
+      {
+        path: 'created_by',
+      },
+    ]);
+    return unitDetail;
   }
 
-  update(id: string) {
-    return `This action updates a #${id} unit`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} unit`;
+  async update(id: string, body: unitDocument) {
+    return this.unitModel.updateOne({ id }, { $set: { ...body } });
   }
 }

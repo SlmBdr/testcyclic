@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { error } from 'console';
+
 import { Model } from 'mongoose';
 import { appointmentDocument } from 'src/interfaces/mongoose.gen';
 import { appointment } from 'src/models/appointment.schema';
@@ -37,23 +37,11 @@ export class AppointmentService {
       .populate([
         {
           path: 'unit',
-          select: [
-            'name',
-            'type',
-            'location',
-            'status',
-            'capacity',
-            'created_at',
-            'created_by',
-          ],
+          select: ['name.full', 'type', 'location', 'status', 'capacity'],
         },
         {
           path: 'doctor',
-          select: ['name', 'position'],
-        },
-        {
-          path: 'created_by',
-          select: 'name',
+          select: ['name.first', 'name.last', 'position'],
         },
       ]);
     // .populate({

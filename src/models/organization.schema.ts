@@ -41,7 +41,8 @@ const organizationSchema = new Schema({
   },
 });
 
-export const organization = mongoose.model<
+export const organizationModels = mongoose.model<
   organizationDocument,
   organizationModel
 >('organization', organizationSchema);
+export class organization {}

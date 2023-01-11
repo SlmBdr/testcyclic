@@ -481,7 +481,7 @@ export type entity = {
   name: string;
   about?: string;
   type: 'GUDANG' | 'MEDIS';
-  status: 'GUDANG' | 'MEDIS';
+  status: 'BUKA' | 'TUTUP' | 'PEMELIHARAAN';
   is_address_same_as_org: boolean;
   created_at: Date;
   created_by: employee['_id'] | employee;
@@ -621,7 +621,7 @@ export type entityDocument = mongoose.Document<
     name: string;
     about?: string;
     type: 'GUDANG' | 'MEDIS';
-    status: 'GUDANG' | 'MEDIS';
+    status: 'BUKA' | 'TUTUP' | 'PEMELIHARAAN';
     is_address_same_as_org: boolean;
     created_at: Date;
     created_by: employeeDocument['_id'] | employeeDocument;
