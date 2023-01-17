@@ -8,6 +8,7 @@ import {
   Res,
 } from '@nestjs/common';
 import { Payload } from '@nestjs/microservices';
+import { IFilterParams } from 'src/interfaces/filter.type';
 import { guarantorDocument } from 'src/interfaces/mongoose.gen';
 import { GuarantorService } from './guarantor.service';
 
@@ -26,13 +27,13 @@ export class GuarantorController {
     }
   }
 
-  @Get()
-  async findAll(@Res() res) {
-    const allGuarantor = await this.guarantorService.findAllGuarantor();
+  @Post('find')
+  async findAll(@Res() res, @Payload() filter: IFilterParams) {
+    const allGuarantor = await this.guarantorService.findAllGuarantor(filter);
     return res.status(HttpStatus.ACCEPTED).json({ allGuarantor });
   }
 
-  @Get('/detail/:id')
+  @Get('search/:id')
   async findOne(@Res() res, @Param('id') id: string) {
     const detailGuarantor = await this.guarantorService.findOne(id);
     if (!detailGuarantor) {
@@ -44,7 +45,16 @@ export class GuarantorController {
   }
 
   @Patch()
-  update(@Payload() guarantor: guarantorDocument) {
-    return this.guarantorService.update(guarantor.id, guarantor);
+  async update(@Res() res, @Payload() guarantor: guarantorDocument) {
+    const guarantorUpdate = await this.guarantorService.update(
+      guarantor.id,
+      guarantor,
+    );
+    if (!guarantorUpdate) {
+      return res.status(HttpStatus.BAD_REQUEST).json({
+        message: 'update failed',
+      });
+    }
+    return res.status(HttpStatus.OK).json({ guarantor });
   }
 }

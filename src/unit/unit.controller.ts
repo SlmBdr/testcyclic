@@ -8,8 +8,9 @@ import {
   Res,
 } from '@nestjs/common';
 import { Param } from '@nestjs/common/decorators';
-import { MessagePattern, Payload } from '@nestjs/microservices';
+import { Payload } from '@nestjs/microservices';
 import { error } from 'console';
+import { IFilterParams } from 'src/interfaces/filter.type';
 import { unitDocument } from 'src/interfaces/mongoose.gen';
 import { UnitService } from './unit.service';
 
@@ -30,13 +31,20 @@ export class UnitController {
     }
   }
 
-  @Get()
-  findAll() {
-    return this.unitService.findAllUnit();
+  @Post('find')
+  async findAll(@Res() res, @Payload() filter: IFilterParams) {
+    const data = await this.unitService.findAllUnit(filter);
+    if (data === null || '') {
+      return res.status(HttpStatus.BAD_REQUEST), error;
+    } else {
+      return res.status(HttpStatus.OK).json({
+        data,
+      });
+    }
   }
 
-  @Get('detail/:status')
-  findOne(@Param('status') status: string) {
+  @Get('search/:status')
+  async findOne(@Param('status') status: string) {
     return this.unitService.findOne(status);
   }
 

@@ -2,8 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { error } from 'console';
 import { Model } from 'mongoose';
+import { IFilterParams } from 'src/interfaces/filter.type';
 import { unitDocument } from 'src/interfaces/mongoose.gen';
 import { unit } from 'src/models/unit.schema';
+import filterUtilities from 'src/utilities/filter';
 
 @Injectable()
 export class UnitService {
@@ -21,8 +23,8 @@ export class UnitService {
     }
   }
 
-  async findAllUnit() {
-    return this.unitModel.find().populate([
+  async findAllUnit(filter: IFilterParams) {
+    return this.unitModel.find(await filterUtilities(filter)).populate([
       {
         path: 'belongs_to',
       },

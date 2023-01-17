@@ -3,8 +3,8 @@ import { Body, Get, Patch, Res } from '@nestjs/common/decorators';
 import { HttpStatus } from '@nestjs/common/enums';
 import { Payload } from '@nestjs/microservices';
 import { error } from 'console';
+import { IFilterParams } from 'src/interfaces/filter.type';
 import { appointmentDocument } from 'src/interfaces/mongoose.gen';
-
 import { AppointmentService } from './appointment.service';
 
 @Controller('/appointment')
@@ -26,9 +26,9 @@ export class AppointmentController {
     }
   }
 
-  @Get()
-  async findAll(@Res() res) {
-    const data = await this.appointmentService.findAllAppointment();
+  @Post('find')
+  async findAll(@Res() res, @Payload() filter: IFilterParams) {
+    const data = await this.appointmentService.findAllAppointment(filter);
     if (data === null || '') {
       return res.status(HttpStatus.BAD_REQUEST), error;
     } else {
@@ -38,7 +38,7 @@ export class AppointmentController {
     }
   }
 
-  @Get('getone/:mrn')
+  @Get('search/:mrn')
   async findOne(@Res() res, @Param('mrn') mrn: string) {
     const AppointmentDetail = await this.appointmentService.findOne(mrn);
     if (AppointmentDetail === null || '') {
@@ -53,7 +53,7 @@ export class AppointmentController {
     }
   }
 
-  @Patch(':id')
+  @Patch('update/:id')
   async update(@Res() res, @Payload() appointment: appointmentDocument) {
     const AppointmentUpdate = await this.appointmentService.update(
       appointment.id,

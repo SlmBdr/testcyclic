@@ -1,8 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { IFilterParams } from 'src/interfaces/filter.type';
 import { organizationDocument } from 'src/interfaces/mongoose.gen';
 import { organization } from 'src/models/organization.schema';
+import filterUtilities from 'src/utilities/filter';
 
 @Injectable()
 export class OrganizationService {
@@ -19,8 +21,8 @@ export class OrganizationService {
       return newOrganization.save();
     }
   }
-  async findAllOrganization() {
-    return await this.organizationModel.find();
+  async findAllOrganization(filter: IFilterParams) {
+    return await this.organizationModel.find(await filterUtilities(filter));
   }
 
   async findOne(name: string) {

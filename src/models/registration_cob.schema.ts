@@ -14,7 +14,6 @@ const registrationCobSchema = new Schema({
   ],
   created_at: {
     type: Date,
-    required: true,
   },
   created_by: {
     type: Schema.Types.ObjectId,
@@ -29,8 +28,17 @@ const registrationCobSchema = new Schema({
     ref: 'employee',
   },
 });
+registrationCobSchema.pre('save', function (next) {
+  const now = new Date();
+  this.created_at = now;
+  if (!this.created_at) {
+    this.created_at = now;
+  }
+  next();
+});
 
-export const registrationCob = mongoose.model<
+export const registrationCobModels = mongoose.model<
   registrationCobDocument,
   registrationCobModel
 >('registrationCob', registrationCobSchema);
+export class registrationCob {}

@@ -4,6 +4,7 @@ import { entityDocument, entityModel } from 'src/interfaces/mongoose.gen';
 import address from './sub-schema/address.schema';
 import entity_warehouse from './sub-schema/entity_warehouse.schema';
 import entity_medical from './sub-schema/entity_medical.schema';
+
 const entitySchema = new Schema({
   organization: {
     type: Schema.Types.ObjectId,
@@ -42,7 +43,7 @@ const entitySchema = new Schema({
     type: entity_medical,
   },
   created_at: {
-    type: Date,
+    type: String,
     required: true,
   },
   created_by: {

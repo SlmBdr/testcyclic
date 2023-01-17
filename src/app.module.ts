@@ -10,6 +10,9 @@ import { OrganizationModule } from './organization/organization.module';
 import { EntityModule } from './entity/entity.module';
 import { EntityEmployeeModule } from './entity_employee/entity_employee.module';
 import { GuarantorModule } from './guarantor/guarantor.module';
+import { PatientModule } from './patient/patient.module';
+import { RegistrationModule } from './registration/registration.module';
+import { RegistrationCobModule } from './registration_cob/registration_cob.module';
 
 @Module({
   imports: [
@@ -22,6 +25,9 @@ import { GuarantorModule } from './guarantor/guarantor.module';
     EntityModule,
     EntityEmployeeModule,
     GuarantorModule,
+    PatientModule,
+    RegistrationModule,
+    RegistrationCobModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -1293,7 +1293,7 @@ export type patientDocument = mongoose.Document<
 export type registrationCobGuarantor = {
   guarantor: guarantor['_id'] | guarantor;
   guarantor_no: string;
-  method: 'PLAFON, CAKUPAN';
+  method: 'PLAFON', 'CAKUPAN';
   plafond_amount?: string;
   _id: {
     type: {};

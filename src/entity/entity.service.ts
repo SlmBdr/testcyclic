@@ -2,8 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { error } from 'console';
 import { Model } from 'mongoose';
+import { IFilterParams } from 'src/interfaces/filter.type';
 import { entityDocument } from 'src/interfaces/mongoose.gen';
 import { entity } from 'src/models/entity.schema';
+import filterUtilities from 'src/utilities/filter';
 
 @Injectable()
 export class EntityService {
@@ -14,6 +16,7 @@ export class EntityService {
 
   async createEntity(entity: entityDocument) {
     const newEntity = new this.entityModel(entity);
+    newEntity.created_at;
     if (!newEntity) {
       return null;
     } else {
@@ -21,8 +24,8 @@ export class EntityService {
     }
   }
 
-  async findAllEntity() {
-    return await this.entityModel.find();
+  async findAllEntity(filter: IFilterParams) {
+    return await this.entityModel.find(await filterUtilities(filter));
   }
 
   async findOne(id: string) {

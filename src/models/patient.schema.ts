@@ -60,7 +60,8 @@ const patientSchema = new Schema({
   },
 });
 
-export const patient = mongoose.model<patientDocument, patientModel>(
+export const patientModels = mongoose.model<patientDocument, patientModel>(
   'patient',
   patientSchema,
 );
+export class patient {}

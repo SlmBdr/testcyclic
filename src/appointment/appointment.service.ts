@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-
 import { Model } from 'mongoose';
+import filterUtilities from 'src/utilities/filter';
 import { appointmentDocument } from 'src/interfaces/mongoose.gen';
 import { appointment } from 'src/models/appointment.schema';
+import { IFilterParams } from 'src/interfaces/filter.type';
 
 @Injectable()
 export class AppointmentService {
@@ -21,12 +22,14 @@ export class AppointmentService {
     }
   }
 
-  async findAllAppointment() {
-    return await this.appointmentModel.find().populate({
-      path: 'employee',
-      strictPopulate: false,
-      select: ['name'],
-    });
+  async findAllAppointment(filter: IFilterParams) {
+    return await this.appointmentModel
+      .find(await filterUtilities(filter))
+      .populate({
+        path: 'employee',
+        strictPopulate: false,
+        select: ['name'],
+      });
   }
 
   async findOne(mrn: string) {

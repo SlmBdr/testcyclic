@@ -8,8 +8,9 @@ import {
   Param,
   Patch,
 } from '@nestjs/common';
-import { MessagePattern, Payload } from '@nestjs/microservices';
+import { Payload } from '@nestjs/microservices';
 import { error } from 'console';
+import { IFilterParams } from 'src/interfaces/filter.type';
 import { organizationDocument } from 'src/interfaces/mongoose.gen';
 import { OrganizationService } from './organization.service';
 
@@ -32,9 +33,9 @@ export class OrganizationController {
     }
   }
 
-  @Get()
-  async findAll(@Res() res) {
-    const data = await this.organizationService.findAllOrganization();
+  @Post('find')
+  async findAll(@Res() res, @Payload() filter: IFilterParams) {
+    const data = await this.organizationService.findAllOrganization(filter);
     if (data === null || '') {
       return res.status(HttpStatus.BAD_REQUEST), error;
     } else {
@@ -44,7 +45,7 @@ export class OrganizationController {
     }
   }
 
-  @Get('getone/:name')
+  @Get('search/:name')
   async findOne(@Res() res, @Param('name') name: string) {
     const organizationDetail = await this.organizationService.findOne(name);
     if (organizationDetail === null || '') {
