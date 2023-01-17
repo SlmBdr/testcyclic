@@ -13,6 +13,7 @@ import { GuarantorModule } from './guarantor/guarantor.module';
 import { PatientModule } from './patient/patient.module';
 import { RegistrationModule } from './registration/registration.module';
 import { RegistrationCobModule } from './registration_cob/registration_cob.module';
+import { AuthenticationModule } from './authentication/authentication.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { RegistrationCobModule } from './registration_cob/registration_cob.modul
     PatientModule,
     RegistrationModule,
     RegistrationCobModule,
+    AuthenticationModule,
   ],
   controllers: [AppController],
   providers: [AppService],

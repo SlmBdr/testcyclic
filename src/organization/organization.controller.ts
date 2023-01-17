@@ -60,7 +60,7 @@ export class OrganizationController {
     }
   }
 
-  @Patch(':id')
+  @Patch('update/:id')
   async update(@Res() res, @Payload() organization: organizationDocument) {
     const organizationUpdate = await this.organizationService.update(
       organization.name,

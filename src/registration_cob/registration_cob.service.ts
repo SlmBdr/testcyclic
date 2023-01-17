@@ -10,29 +10,28 @@ import filterUtilities from 'src/utilities/filter';
 export class RegistrationCobService {
   constructor(
     @InjectModel(registrationCob.name)
-    private regcobModel: Model<registrationCobDocument>,
+    private registrationCobModel: Model<registrationCobDocument>,
   ) {}
 
-  async createRegCob(registrationCob: registrationCobDocument) {
-    const newRegCob = new this.regcobModel(registrationCob);
-    if (!newRegCob) {
+  async createregistrationCob(registrationCob: registrationCobDocument) {
+    const newregistrationCob = new this.registrationCobModel(registrationCob);
+    if (!newregistrationCob) {
       return null;
     } else {
-      return newRegCob.save();
+      return newregistrationCob.save();
     }
   }
 
   async findAll(filter: IFilterParams) {
-    return await this.regcobModel.find(await filterUtilities(filter));
+    return await this.registrationCobModel.find(await filterUtilities(filter));
   }
 
   async findOne(id: string) {
-    const data = await this.regcobModel.findOne({ id });
-
+    const data = await this.registrationCobModel.findOne({ id });
     return data;
   }
 
   async update(id: string, body: registrationCobDocument) {
-    return this.regcobModel.updateOne({ id }, { ...body });
+    return this.registrationCobModel.updateOne({ id }, { ...body });
   }
 }

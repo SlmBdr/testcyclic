@@ -33,7 +33,7 @@ export class RegistrationController {
     return this.registrationService.findOne(id);
   }
 
-  @Patch('update')
+  @Patch('update/:id')
   async update(@Res() res, @Payload() registration: registrationDocument) {
     const RegistrationUpdate = await this.registrationService.update(
       registration.id,

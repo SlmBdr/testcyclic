@@ -44,8 +44,13 @@ export class EntityController {
     }
   }
 
-  @Patch()
-  update(@Payload() entity: entityDocument) {
-    return this.entityService.update(entity.id, entity);
+  @Patch('update/:id')
+  async update(@Res() res, @Payload() entity: entityDocument) {
+    const entityUpdate = await this.entityService.update(entity.id, entity);
+    if (!entityUpdate) {
+      return res.status(HttpStatus.BAD_REQUEST);
+    } else {
+      return res.status(HttpStatus.OK).json(entityUpdate);
+    }
   }
 }

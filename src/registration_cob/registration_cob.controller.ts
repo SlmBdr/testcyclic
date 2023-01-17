@@ -6,17 +6,21 @@ import { RegistrationCobService } from './registration_cob.service';
 import { registrationCobDocument } from 'src/interfaces/mongoose.gen';
 import { IFilterParams } from 'src/interfaces/filter.type';
 
-@Controller('regcob')
+@Controller('registrationCob')
 export class RegistrationCobController {
   constructor(
     private readonly registrationCobService: RegistrationCobService,
   ) {}
 
   @Post()
-  async createRegCob(@Res() res, @Payload() regcob: registrationCobDocument) {
-    const newRegCob = await this.registrationCobService.createRegCob(regcob);
-    if (newRegCob) {
-      return res.status(HttpStatus.CREATED).json({ regcob });
+  async createregistrationCob(
+    @Res() res,
+    @Payload() registrationCob: registrationCobDocument,
+  ) {
+    const newregistrationCob =
+      await this.registrationCobService.createregistrationCob(registrationCob);
+    if (newregistrationCob) {
+      return res.status(HttpStatus.CREATED).json({ newregistrationCob });
     } else {
       return res.status(HttpStatus.BAD_REQUEST);
     }
@@ -38,7 +42,7 @@ export class RegistrationCobController {
     }
   }
 
-  @Patch('update')
+  @Patch('update/:id')
   async update(
     @Res() res,
     @Payload() registrationCob: registrationCobDocument,

@@ -43,7 +43,7 @@ export class PatientController {
     return this.patientService.findOne(id);
   }
 
-  @Put('update')
+  @Put('update/:id')
   async update(@Payload() patient: patientDocument) {
     return this.patientService.update(patient.id, patient);
   }

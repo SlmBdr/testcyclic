@@ -33,6 +33,7 @@
     "commitizen": "^4.2.5",
     "cz-emoji-conventional": "^1.0.1",
     "dayjs": "^1.11.7",
+    "firebase": "^9.15.0",
     "mongoose": "^6.5.2",
     "mongoose-tsgen": "^9.0.10",
     "reflect-metadata": "^0.1.13",
