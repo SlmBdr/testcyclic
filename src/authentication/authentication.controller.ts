@@ -1,35 +1,40 @@
-import { Controller } from '@nestjs/common';
-import { MessagePattern, Payload } from '@nestjs/microservices';
+import { Controller, Post } from '@nestjs/common';
+import { Get } from '@nestjs/common/decorators';
+import { Payload } from '@nestjs/microservices';
+import { Icreate, ILogin } from 'src/interfaces/authentication.type';
 import { AuthenticationService } from './authentication.service';
-import { CreateAuthenticationDto } from './dto/create-authentication.dto';
-import { UpdateAuthenticationDto } from './dto/update-authentication.dto';
 
-@Controller()
+@Controller('user')
 export class AuthenticationController {
   constructor(private readonly authenticationService: AuthenticationService) {}
 
-  @MessagePattern('createAuthentication')
-  create(@Payload() createAuthenticationDto: CreateAuthenticationDto) {
-    return this.authenticationService.create(createAuthenticationDto);
+  @Post('create')
+  async create(@Payload() regis: Icreate) {
+    return this.authenticationService.create(regis);
   }
 
-  @MessagePattern('findAllAuthentication')
-  findAll() {
-    return this.authenticationService.findAll();
+  @Get()
+  async allUser() {
+    return this.authenticationService.allUser();
   }
 
-  @MessagePattern('findOneAuthentication')
-  findOne(@Payload() id: number) {
-    return this.authenticationService.findOne(id);
+  @Post('login')
+  async logIn(@Payload() login: ILogin) {
+    return this.authenticationService.logIn(login);
   }
 
-  @MessagePattern('updateAuthentication')
-  update(@Payload() updateAuthenticationDto: UpdateAuthenticationDto) {
-    return this.authenticationService.update(updateAuthenticationDto.id, updateAuthenticationDto);
-  }
+  //   @MessagePattern('findOneAuthentication')
+  //   findOne(@Payload() id: number) {
+  //     return this.authenticationService.findOne(id);
+  //   }
 
-  @MessagePattern('removeAuthentication')
-  remove(@Payload() id: number) {
-    return this.authenticationService.remove(id);
-  }
+  //   @MessagePattern('updateAuthentication')
+  //   update(@Payload() updateAuthenticationDto: UpdateAuthenticationDto) {
+  //     return this.authenticationService.update(updateAuthenticationDto.id, updateAuthenticationDto);
+  //   }
+
+  //   @MessagePattern('removeAuthentication')
+  //   remove(@Payload() id: number) {
+  //     return this.authenticationService.remove(id);
+  //   }
 }

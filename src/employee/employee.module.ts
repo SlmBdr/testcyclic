@@ -3,6 +3,7 @@ import { EmployeeService } from './employee.service';
 import { EmployeeController } from './employee.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { employee, employeeModels } from 'src/models/employee.schema';
+import { firebaseService } from 'src/firebase/firebase.service';
 
 @Module({
   imports: [
@@ -11,6 +12,6 @@ import { employee, employeeModels } from 'src/models/employee.schema';
     ]),
   ],
   controllers: [EmployeeController],
-  providers: [EmployeeService],
+  providers: [EmployeeService, firebaseService],
 })
 export class EmployeeModule {}

@@ -6,6 +6,7 @@ import {
 } from 'src/interfaces/mongoose.gen';
 import address from './sub-schema/address.schema';
 import contact from './sub-schema/contact.schema';
+import account from './sub-schema/account.schema';
 
 const organizationSchema = new Schema({
   name: {
@@ -34,6 +35,10 @@ const organizationSchema = new Schema({
     type: String,
     required: true,
     enum: ORGANIZATION_STATUS,
+  },
+  owner: {
+    type: account,
+    required: true,
   },
   registered_at: {
     type: Date,

@@ -51,10 +51,6 @@ export class AppointmentService {
           select: 'name',
         },
       ]);
-    // .populate({
-    //   path: 'doctor',
-    //   select: 'name',
-    // });
     return data;
   }
 

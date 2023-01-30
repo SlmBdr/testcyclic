@@ -36,6 +36,7 @@
     "firebase": "^9.15.0",
     "mongoose": "^6.5.2",
     "mongoose-tsgen": "^9.0.10",
+    "node-mailjet": "^6.0.1",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0"

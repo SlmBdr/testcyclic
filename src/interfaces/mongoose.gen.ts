@@ -171,7 +171,8 @@ export type employeeName = {
 export type employeeAccount = {
   has_account: boolean;
   account_id?: string;
-  account_email?: string;
+  account_email: string;
+  account_password: string;
   account_role?: string;
   registered_at?: Date;
   registered_by?: employee['_id'] | employee;
@@ -295,7 +296,8 @@ export type employeeAccountDocument =
   mongoose.Document<mongoose.Types.ObjectId> & {
     has_account: boolean;
     account_id?: string;
-    account_email?: string;
+    account_email: string;
+    account_password: string;
     account_role?: string;
     registered_at?: Date;
     registered_by?: employeeDocument['_id'] | employeeDocument;
@@ -497,7 +499,7 @@ export type entity = {
   type: 'GUDANG' | 'MEDIS';
   status: 'BUKA' | 'TUTUP' | 'PEMELIHARAAN';
   is_address_same_as_org: boolean;
-  created_at: Date;
+  created_at: string;
   created_by: employee['_id'] | employee;
   updated_at?: Date;
   updated_by?: employee['_id'] | employee;
@@ -643,7 +645,7 @@ export type entityDocument = mongoose.Document<
     type: 'GUDANG' | 'MEDIS';
     status: 'BUKA' | 'TUTUP' | 'PEMELIHARAAN';
     is_address_same_as_org: boolean;
-    created_at: Date;
+    created_at: string;
     created_by: employeeDocument['_id'] | employeeDocument;
     updated_at?: Date;
     updated_by?: employeeDocument['_id'] | employeeDocument;
@@ -815,6 +817,27 @@ export type organizationAddress = {
 };
 
 /**
+ * Lean version of organizationOwnerDocument
+ *
+ * This has all Mongoose getters & functions removed. This type will be returned from `organizationDocument.toObject()`.
+ * ```
+ * const organizationObject = organization.toObject();
+ * ```
+ */
+export type organizationOwner = {
+  has_account: boolean;
+  account_id?: string;
+  account_email: string;
+  account_password: string;
+  account_role?: string;
+  registered_at?: Date;
+  registered_by?: employee['_id'] | employee;
+  _id: {
+    type: {};
+  };
+};
+
+/**
  * Lean version of organizationDocument
  *
  * This has all Mongoose getters & functions removed. This type will be returned from `organizationDocument.toObject()`. To avoid conflicts with model names, use the type alias `organizationObject`.
@@ -832,6 +855,7 @@ export type organization = {
   _id: mongoose.Types.ObjectId;
   contact_person: organizationContact_person;
   address: organizationAddress;
+  owner: organizationOwner;
 };
 
 /**
@@ -957,6 +981,28 @@ export type organizationAddressDocument =
  * const organization = mongoose.model<organizationDocument, organizationModel>("organization", organizationSchema);
  * ```
  */
+export type organizationOwnerDocument =
+  mongoose.Document<mongoose.Types.ObjectId> & {
+    has_account: boolean;
+    account_id?: string;
+    account_email: string;
+    account_password: string;
+    account_role?: string;
+    registered_at?: Date;
+    registered_by?: employeeDocument['_id'] | employeeDocument;
+    _id: {
+      type: {};
+    };
+  };
+
+/**
+ * Mongoose Document type
+ *
+ * Pass this type to the Mongoose Model constructor:
+ * ```
+ * const organization = mongoose.model<organizationDocument, organizationModel>("organization", organizationSchema);
+ * ```
+ */
 export type organizationDocument = mongoose.Document<
   mongoose.Types.ObjectId,
   organizationQueries
@@ -971,6 +1017,7 @@ export type organizationDocument = mongoose.Document<
     _id: mongoose.Types.ObjectId;
     contact_person: organizationContact_personDocument;
     address: organizationAddressDocument;
+    owner: organizationOwnerDocument;
   };
 
 /**
@@ -1293,7 +1340,7 @@ export type patientDocument = mongoose.Document<
 export type registrationCobGuarantor = {
   guarantor: guarantor['_id'] | guarantor;
   guarantor_no: string;
-  method: 'PLAFON', 'CAKUPAN';
+  method: 'PLAFON' | 'CAKUPAN';
   plafond_amount?: string;
   _id: {
     type: {};
@@ -1310,7 +1357,7 @@ export type registrationCobGuarantor = {
  */
 export type registrationCob = {
   guarantors: registrationCobGuarantor[];
-  created_at: Date;
+  created_at?: Date;
   created_by: employee['_id'] | employee;
   updated_at?: Date;
   updated_by?: employee['_id'] | employee;
@@ -1390,7 +1437,7 @@ export type registrationCobSchema = mongoose.Schema<
 export type registrationCobGuarantorDocument = mongoose.Types.Subdocument & {
   guarantor: guarantorDocument['_id'] | guarantorDocument;
   guarantor_no: string;
-  method: 'PLAFON, CAKUPAN';
+  method: 'PLAFON' | 'CAKUPAN';
   plafond_amount?: string;
   _id: {
     type: {};
@@ -1411,7 +1458,7 @@ export type registrationCobDocument = mongoose.Document<
 > &
   registrationCobMethods & {
     guarantors: mongoose.Types.DocumentArray<registrationCobGuarantorDocument>;
-    created_at: Date;
+    created_at?: Date;
     created_by: employeeDocument['_id'] | employeeDocument;
     updated_at?: Date;
     updated_by?: employeeDocument['_id'] | employeeDocument;
@@ -1459,13 +1506,15 @@ export type registration = {
   note?: string;
   referral_from?: string;
   cob?: registrationCob['_id'] | registrationCob;
-  created_at: Date;
+  created_at?: Date;
   created_by: employee['_id'] | employee;
   updated_at?: Date;
   updated_by?: employee['_id'] | employee;
   canceled_at?: Date;
   canceled_by?: employee['_id'] | employee;
   _id: mongoose.Types.ObjectId;
+  updatedAt?: Date;
+  createdAt?: Date;
   service_time: registrationService_time;
 };
 
@@ -1580,13 +1629,15 @@ export type registrationDocument = mongoose.Document<
     note?: string;
     referral_from?: string;
     cob?: registrationCobDocument['_id'] | registrationCobDocument;
-    created_at: Date;
+    created_at?: Date;
     created_by: employeeDocument['_id'] | employeeDocument;
     updated_at?: Date;
     updated_by?: employeeDocument['_id'] | employeeDocument;
     canceled_at?: Date;
     canceled_by?: employeeDocument['_id'] | employeeDocument;
     _id: mongoose.Types.ObjectId;
+    updatedAt?: Date;
+    createdAt?: Date;
     service_time: registrationService_timeDocument;
   };
 
