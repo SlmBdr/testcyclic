@@ -7,8 +7,8 @@ import { IFilterParams } from 'src/interfaces/filter.type';
 import { organizationDocument } from 'src/interfaces/mongoose.gen';
 import { organization } from 'src/models/organization.schema';
 import filterUtilities from 'src/utilities/filter';
-import { owner_information } from 'src/models/sub-schema/owner_information.schema';
-import { account } from 'src/models/sub-schema/account.schema';
+import owner_information from 'src/models/sub-schema/owner_information.schema';
+import { doc, DocumentReference } from 'firebase/firestore/lite';
 
 @Injectable()
 export class OrganizationService {
@@ -16,6 +16,7 @@ export class OrganizationService {
     @InjectModel(organization.name)
     private organizationModel: Model<organizationDocument>,
     private firebaseService: firebaseService,
+    private docRef: DocumentReference,
   ) {}
 
   async createOrganization(organization: organizationDocument) {

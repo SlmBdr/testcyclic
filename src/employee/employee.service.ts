@@ -26,7 +26,7 @@ export class EmployeeService {
     );
     const uid: string = toFirestore.user.uid;
     const docRef: DocumentReference = doc(
-      this.firebaseService.employeeColection,
+      this.firebaseService.employeeCollection,
       uid,
     );
     const newEmployee = new this.employeeeModel(employee);
